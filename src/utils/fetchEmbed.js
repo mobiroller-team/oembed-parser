@@ -20,13 +20,9 @@ const fetchEmbed = (url, provider, params) => {
         ? `${link}&maxheight=${params.maxheight}`
         : link;
 
-    const PARAMS = {
-      method: 'GET',
-      mode: 'no-cors',
-      cache: 'no-cache'
-    };
+    const proxy = 'https://cors-anywhere.herokuapp.com/';
 
-    return fetch(link, PARAMS)
+    return fetch(proxy + link, PARAMS)
       .then(res => {
         return res.json();
       })
