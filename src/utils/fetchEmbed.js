@@ -22,7 +22,7 @@ const fetchEmbed = (url, provider, params) => {
 
     const proxy = 'https://cors-anywhere.herokuapp.com/';
 
-    return fetch(proxy + link, PARAMS)
+    return fetch(proxy + link)
       .then(res => {
         return res.json();
       })
