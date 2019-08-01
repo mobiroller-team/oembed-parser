@@ -7,25 +7,37 @@ const fetchEmbed = (url, provider, params) => {
     let {
       provider_name, // eslint-disable-line camelcase
       provider_url, // eslint-disable-line camelcase
-      url: resourceUrl,
+      url: resourceUrl
     } = provider;
-
 
     resourceUrl = resourceUrl.replace(/\{format\}/g, 'json');
 
     let link = `${resourceUrl}?format=json&url=${encodeURIComponent(url)}`;
-    link = params && params.maxwidth ? `${link}&maxwidth=${params.maxwidth}` : link;
-    link = params && params.maxheight ? `${link}&maxheight=${params.maxheight}` : link;
+    link =
+      params && params.maxwidth ? `${link}&maxwidth=${params.maxwidth}` : link;
+    link =
+      params && params.maxheight
+        ? `${link}&maxheight=${params.maxheight}`
+        : link;
 
-    return fetch(link).then((res) => {
-      return res.json();
-    }).then((json) => {
-      json.provider_name = provider_name; // eslint-disable-line camelcase
-      json.provider_url = provider_url; // eslint-disable-line camelcase
-      return resolve(json);
-    }).catch((err) => {
-      return reject(err);
-    });
+    const PARAMS = {
+      method: 'GET',
+      mode: 'no-cors',
+      cache: 'no-cache'
+    };
+
+    return fetch(link, PARAMS)
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        json.provider_name = provider_name; // eslint-disable-line camelcase
+        json.provider_url = provider_url; // eslint-disable-line camelcase
+        return resolve(json);
+      })
+      .catch(err => {
+        return reject(err);
+      });
   });
 };
 
